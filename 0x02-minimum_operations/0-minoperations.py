@@ -1,29 +1,25 @@
 #!/usr/bin/python3
-"""
-Module for calculating minimum operations to achieve n H characters
-"""
+""" Module for 0-minoperations"""
 
 
 def minOperations(n):
     """
-    Calculate the minimum number of operations needed to get n H characters.
-    
-    Args:
-        n (int): The target number of H characters
-        
-    Returns:
-        int: Minimum number of operations needed, or 0 if impossible
+    minOperations
+    Gets fewest # of operations needed to result in exactly n H characters
     """
-    if n <= 1:
+    # all outputs should be at least 2 char: (min, Copy All => Paste)
+    if (n < 2):
         return 0
-        
-    operations = 0
-    divisor = 2
-    
-    while n > 1:
-        while n % divisor == 0:
-            operations += divisor
-            n //= divisor
-        divisor += 1
-        
-    return operations 
+    ops, root = 0, 2
+    while root <= n:
+        # if n evenly divides by root
+        if n % root == 0:
+            # total even-divisions by root = total operations
+            ops += root
+            # set n to the remainder
+            n = n / root
+            # reduce root to find remaining smaller vals that evenly-divide n
+            root -= 1
+        # increment root until it evenly-divides n
+        root += 1
+    return ops
